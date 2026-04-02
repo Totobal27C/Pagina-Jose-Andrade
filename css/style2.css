@@ -1,0 +1,12 @@
+        body{
+                font-family:'Courier New', Courier, monospace;
+                background-color: darkgray;
+        }
+        .colores{
+                background-color: aquamarine;
+                font-size: 25px;
+        }
+        .letras{
+            font-size: 25px;
+            font-family: cursive;
+        }

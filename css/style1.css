@@ -1,0 +1,247 @@
+:root {
+        --primary: #1E60D6; /* azul metálico */
+        --dark: #071733; /* azul muy oscuro */
+        --muted: #6e8aa6; /* gris azulado */
+        --card: #f4fbff; /* blanco hielo */
+        --bg: #eaf6ff; /* fondo suave azul hielo */
+}
+
+* {
+        box-sizing: border-box
+}
+
+body {
+        margin: 0;
+        font-family: Inter, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+        background: var(--bg);
+        color: #111
+}
+
+header {
+        background: linear-gradient(90deg, #082a60 0%, var(--primary) 100%);
+        color: #fff;
+        padding: 1rem
+}
+
+.container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1rem
+}
+
+.brand {
+        display: flex;
+        gap: 1rem;
+        align-items: center
+}
+
+.logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #fff2, #fff0);
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        color: #063
+}
+
+nav {
+        margin-top: .6rem
+}
+
+nav a {
+        color: rgba(255, 255, 255, .9);
+        margin-right: 1rem;
+        text-decoration: none;
+        font-weight: 600
+}
+
+main {
+        padding: 1rem .75rem
+}
+
+.hero {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        background: linear-gradient(180deg, #fff, #f8fbfb);
+        padding: 1rem;
+        border-radius: 10px
+}
+
+.team-info {
+        flex: 1
+}
+
+.team-title {
+        font-size: 1.6rem;
+        margin: 0;
+        display: flex;
+        gap: .5rem;
+        align-items: center
+}
+
+.badge {
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        border-radius: 6px;
+        padding: .2rem .5rem;
+        font-weight: 700
+}
+
+.meta {
+        color: var(--muted);
+        margin: .4rem 0
+}
+
+.summary {
+        margin-top: .6rem;
+        color: #222
+}
+
+.actions {
+        display: flex;
+        gap: .5rem;
+        margin-top: .8rem
+}
+
+.btn {
+        background: var(--primary);
+        color: #fff;
+        padding: .45rem .7rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 6px 16px rgba(30,96,214,0.12);
+}
+
+section {
+        margin-top: 1rem
+}
+
+.grid {
+        display: grid;
+        gap: .75rem
+}
+
+.grid.cols-3 {
+        grid-template-columns: repeat(3, 1fr)
+}
+
+.card {
+        background: var(--card);
+        padding: .8rem;
+        border-radius: 8px;
+        box-shadow: 0 6px 20px rgba(4,18,40,0.04);
+}
+
+.players {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        align-items: start;
+}
+
+/* cada jugador como tarjeta estilo "tableta" */
+.player {
+        background: linear-gradient(180deg, #f8fbff, #f1f8ff);
+        border-radius: 12px;
+        padding: .8rem;
+        display: flex;
+        gap: .8rem;
+        align-items: center;
+        box-shadow: 0 6px 18px rgba(14,34,70,0.06);
+        transition: transform .18s ease, box-shadow .18s ease;
+}
+.player:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(2,12,19,0.09);
+}
+
+.avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(30,96,214,0.12), rgba(255,255,255,0.6));
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        color: var(--dark);
+        font-size: 1.05rem;
+        flex-shrink: 0;
+        border: 1px solid rgba(30,96,214,0.06);
+}
+
+.player-info {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+}
+
+.player-info .name {
+        font-weight: 800;
+        font-size: 1.02rem;
+        color: #062;
+}
+
+.pos {
+        font-size: .9rem;
+        color: var(--muted);
+}
+
+.player .player-actions {
+        margin-top: .45rem;
+}
+
+.btn.small {
+        padding: .28rem .5rem;
+        font-size: .82rem;
+        border-radius: 8px;
+}
+
+table {
+        width: 100%;
+        border-collapse: collapse
+}
+
+th,
+td {
+        padding: .5rem;
+        text-align: left;
+        border-bottom: 1px solid #eee
+}
+
+.stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: .6rem
+}
+
+.stat {
+        background: linear-gradient(180deg, #fbfeff, #f4fbff);
+        padding: .7rem;
+        border-radius: 8px;
+        text-align: center
+}
+
+footer {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        color: var(--muted);
+        text-align: center
+}
+
+@media(min-width:900px) {
+        .hero {
+                padding: 1.4rem
+        }
+}
+
+.img-kratos {
+        width: 60px;
+        height: 50px;
+        border-radius: 30%;
+
+}
