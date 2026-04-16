@@ -17,6 +17,7 @@
                     <!-- simple escudo -->
                     <img class="img-kratos" src="Imagenes/JOSE-ANDRADE.jpg" alt="... ">
                 </div>
+
                 <div>
                     <div style="display:flex;align-items:center;gap:.5rem">
                         <h1 style="margin:0;font-size:1.1rem">Club Jose Andrade</h1>
@@ -265,6 +266,27 @@
                 if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.replaceState(null, '', '#' + id); }
             });
         });
+    </script>
+    <!-- Audio de fondo -->
+    <audio id="bgAudio" src="John Newman - Love Me Again (Lyrics).mp3" autoplay muted loop></audio>
+    <button id="audioToggle" class="audio-toggle" aria-label="Reproducir audio de fondo">🔈</button>
+    <script>
+        (function(){
+            const audio = document.getElementById('bgAudio');
+            const btn = document.getElementById('audioToggle');
+            if (!audio || !btn) return;
+            audio.volume = 0.35;
+            // reproducir en silencio al cargar (asegura autoplay en la mayoría de navegadores)
+            audio.muted = true;
+            audio.play().catch(()=>{});
+            // mostrar botón para que el usuario pueda activar el sonido
+            btn.style.display = 'block';
+            btn.textContent = '🔈';
+            btn.addEventListener('click', ()=>{
+                if (audio.muted) { audio.muted = false; audio.play().catch(()=>{}); btn.textContent = '🔊'; }
+                else { audio.muted = true; btn.textContent = '🔈'; }
+            });
+        })();
     </script>
 </body>
 
