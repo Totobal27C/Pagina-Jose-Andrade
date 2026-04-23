@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Registro</title>
+    <link rel="stylesheet" href="style_form.css">
+    <style>
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, rgba(0, 0, 0, 0.3), rgba(0, 255, 136, 0.05));
+            z-index: -1;
+        }
+
+        body {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-bg">
+        <canvas id="gamerBg"></canvas>
+    </div>
+    <div class="video-overlay"></div>
+
+    <form id="registroForm">
+        <h3> registro de Usuario</h3>
+        <input type="text"  id="nombre" placeholder="Nombre Completo">
+        <input type="text"  id="correo" placeholder="Correo Electronico">
+        <input type="text"  id="direccion" placeholder="Direccion">
+        <input type="text"  id="password" placeholder="Contraseña">
+        <button type="submit"> Registrarse</button>
+        <p id="mensaje"></p>
+    </form>
+
+    <script>
+        // Canvas Animation - Fondo Gamer
+        const canvas = document.getElementById('gamerBg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.opacity = Math.random() * 0.5 + 0.5;
+                this.color = ['#00ff88', '#00cc66', '#00ff00', '#00ffff'][Math.floor(Math.random() * 4)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+
+                this.opacity += Math.random() * 0.02 - 0.01;
+                if (this.opacity > 1) this.opacity = 1;
+                if (this.opacity < 0.2) this.opacity = 0.2;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 0.5;
+                ctx.globalAlpha = this.opacity * 0.5;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size + 2, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        let wave = 0;
+        let scanlineOpacity = 0.1;
+
+        function drawLines() {
+            ctx.strokeStyle = 'rgba(0, 255, 136, 0.2)';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.globalAlpha = (1 - distance / 100) * 0.3;
+                        ctx.strokeStyle = '#00ff88';
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+        }
+
+        function drawScanlines() {
+            ctx.globalAlpha = scanlineOpacity;
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i < canvas.height; i += 3) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        function drawWave() {
+            ctx.strokeStyle = 'rgba(0, 255, 136, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            for (let x = 0; x < canvas.width; x += 10) {
+                const y = canvas.height / 2 + Math.sin((x + wave) * 0.01) * 50 + Math.cos(wave * 0.005) * 30;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(0, 255, 136, 0.05)';
+            ctx.lineWidth = 1;
+
+            const gridSize = 50;
+            for (let x = 0; x < canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+
+            for (let y = 0; y < canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+
+        function animate() {
+            ctx.fillStyle = '#0a0a0a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const gradient = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height));
+            gradient.addColorStop(0, 'rgba(0, 255, 136, 0.05)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawGrid();
+            drawWave();
+
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+
+            drawLines();
+            drawScanlines();
+
+            if (Math.random() > 0.98) {
+                scanlineOpacity = Math.random() * 0.3 + 0.1;
+            } else {
+                scanlineOpacity = Math.max(scanlineOpacity - 0.01, 0.1);
+            }
+
+            wave += 0.5;
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        animate();
+    </script>
+    <script src="java.js"></script>    
+</body>
+</html>
